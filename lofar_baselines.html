@@ -31,15 +31,119 @@
 
 <button onclick="myFunction()">Try it</button>
 
-<p id="demo"></p>
+<p id="LOFAR_baselines"></p>
 
 <script>
-var fruits = ["Banana", "Orange", "Apple", "Mango"];
-document.getElementById("demo").innerHTML = fruits;
+
+var stations = [
+    {"stationName":"CS002HBA0", "coords":[3826600.9610000001266599,460953.4020000000018626,5064881.1359999999403954],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS002HBA1", "coords":[3826565.5940000000409782,460958.1099999999860302,5064907.2580000003799796],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS003HBA0", "coords":[3826471.3480000002309680,461000.1379999999771826,5064974.2010000003501773],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS003HBA1", "coords":[3826517.8119999999180436,461035.2579999999725260,5064936.1500000003725290],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS004HBA0", "coords":[3826585.6260000001639128,460865.8439999999827705,5064900.5609999997541308],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS004HBA1", "coords":[3826579.4860000000335276,460917.4799999999813735,5064900.5020000003278255],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS005HBA0", "coords":[3826701.1600000001490116,460989.2500000000000000,5064802.6849999995902181],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS005HBA1", "coords":[3826631.1940000001341105,461021.8150000000023283,5064852.2589999996125698],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS006HBA0", "coords":[3826653.7829999998211861,461136.4400000000023283,5064824.9429999999701977],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS006HBA1", "coords":[3826612.4989999998360872,461080.2980000000097789,5064861.0060000000521541],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS007HBA0", "coords":[3826478.7149999998509884,461083.7199999999720603,5064961.1169999996200204],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS007HBA1", "coords":[3826538.0210000001825392,461169.7310000000288710,5064908.8269999995827675],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS017HBA0", "coords":[3826405.0950000002048910,461507.4600000000209548,5064978.0829999996349216],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS017HBA1", "coords":[3826499.7829999998211861,461552.4980000000214204,5064902.9380000000819564],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS021HBA0", "coords":[3826463.5019999998621643,460533.0939999999827705,5065022.6140000000596046],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS021HBA1", "coords":[3826368.8130000000819564,460488.0569999999715947,5065097.7589999996125698],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS024HBA0", "coords":[3827218.1929999999701977,461403.8979999999864958,5064378.7900000000372529],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS024HBA1", "coords":[3827123.5040000001899898,461358.8609999999753200,5064453.9349999995902181],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS026HBA0", "coords":[3826418.2269999999552965,461805.8369999999995343,5064941.1990000000223517],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS026HBA1", "coords":[3826335.0780000002123415,461887.6959999999962747,5064996.2130000004544854],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS032HBA0", "coords":[3826864.2620000001043081,460451.9239999999990687,5064730.0060000000521541],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS032HBA1", "coords":[3826947.4109999998472631,460370.0659999999916181,5064674.9919999996200204],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS101HBA0", "coords":[3825899.9769999999552965,461698.9060000000172295,5065339.2050000000745058],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS101HBA1", "coords":[3825805.2880000001750886,461653.8690000000060536,5065414.3499999996274710],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS103HBA0", "coords":[3826331.5899999998509884,462759.0740000000223517,5064919.6200000001117587],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS103HBA1", "coords":[3826248.4410000001080334,462840.9330000000190921,5064974.6339999996125698],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS201HBA0", "coords":[3826679.2809999999590218,461855.2430000000167638,5064741.3799999998882413],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS201HBA1", "coords":[3826690.8209999999962747,461982.1390000000246800,5064721.2489999998360872],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS302HBA0", "coords":[3827973.2259999997913837,459728.6240000000107102,5063975.2999999998137355],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS302HBA1", "coords":[3827890.0770000000484288,459810.4830000000074506,5064030.3130000000819564],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS501HBA0", "coords":[3825568.8199999998323619,460647.6199999999953434,5065683.0279999999329448],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"CS501HBA1", "coords":[3825663.5079999999143183,460692.6579999999958090,5065607.8830000003799796],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"DE601HBA", "coords":[4034101.5219999998807907,487012.7569999999832362,4900230.4989999998360872],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"DE602HBA", "coords":[4152568.0060000000521541,828789.1530000000493601,4754362.2029999997466803],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"DE603HBA", "coords":[3940295.7059999997727573,816722.8649999999906868,4932394.4160000002011657],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"DE604HBA", "coords":[3796379.8229999998584390,877614.1300000000046566,5032712.5279999999329448],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"DE605HBA", "coords":[4005681.0200000000186265,450968.6429999999818392,4926458.2110000001266599],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"FR606HBA", "coords":[4324016.7079999996349216,165545.5249999999941792,4670271.3629999998956919],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS106HBA", "coords":[3829205.5980000002309680,469142.5329999999958090,5062181.0020000003278255],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS205HBA", "coords":[3831479.6699999999254942,463487.5289999999804422,5060989.9029999999329448],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS208HBA", "coords":[3847753.3100000000558794,466962.8090000000083819,5048397.2439999999478459],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS210HBA", "coords":[3877827.5618599997833371,467536.6049559999955818,5025445.5839999997988343],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS305HBA", "coords":[3828732.7209999999031425,454692.4209999999729916,5063850.3339999997988343],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS306HBA", "coords":[3829771.2489999998360872,452761.7019999999902211,5063243.1809999998658895],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS307HBA", "coords":[3837964.5200000000186265,449627.2609999999986030,5057357.5849999999627471],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS310HBA", "coords":[3845376.2900000000372529,413616.5640000000130385,5054796.3410000000149012],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS406HBA", "coords":[3818424.9389999997802079,452020.2689999999711290,5071817.6440000003203750],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS407HBA", "coords":[3811649.4550000000745058,453459.8939999999711290,5076728.9519999995827675],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS409HBA", "coords":[3824812.6209999998100102,426130.3300000000162981,5069251.7539999997243285],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS503HBA", "coords":[3824138.5660000001080334,459476.9720000000088476,5066858.5779999997466803],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS508HBA", "coords":[3797136.4840000001713634,463114.4469999999855645,5086651.2860000003129244],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"RS509HBA", "coords":[3783537.5249999999068677,450130.0640000000130385,5097866.1459999997168779],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"SE607HBA", "coords":[3370271.6570000001229346,712125.8810000000521541,5349991.1650000000372529],"max_baseline":["0",0.0],"baselines":[]},
+    {"stationName":"UK608HBA", "coords":[4008461.9410000001080334,-100376.6089999999967404,4943716.8739999998360872],"max_baseline":["0",0.0],"baselines":[]}
+];
+
+give_baseline_length = function(a,b) {
+  return Math.sqrt(Math.pow(a.coords[0] - b.coords[0] , 2)+Math.pow(a.coords[1] - b.coords[1],2)+Math.pow(a.coords[2] - b.coords[2],2));
+};
+
+calculate_baseline_lengths = function(array) {
+	var bs = 0.0
+    for(var i = 0; i < array.length; i++) {
+    	var max_bs = 0.0;
+    	var max_bs_ant2 = 0;
+		for(var j = 0; j < array.length; j++) {
+			bs = give_baseline_length(array[i], array[j]);
+			array[i].baselines.push([array[j].stationName, bs])
+			if(bs > max_bs)
+			{
+				max_bs = bs;
+				max_bs_ant2 = j;
+			}
+		}
+		array[i].max_baseline[0] = array[max_bs_ant2].stationName;
+		array[i].max_baseline[1] = max_bs;
+    }
+    return 0
+}
+
+function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('ul');
+
+    for(var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
+
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i].stationName));
+        item.appendChild(document.createTextNode("-"));
+        item.appendChild(document.createTextNode(array[i].max_baseline[0]));
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}
+
+document.getElementById('LOFAR_baselines').innerHTML = makeUL(stations).innerHTML;
 
 function myFunction() {
-    fruits.sort();
-    document.getElementById("demo").innerHTML = fruits;
+	calculate_baseline_lengths(stations);
+//	document.write(stations[0].max_baseline[0]);
+    stations.sort(function(a,b) {return a.max_baseline[1] > b.max_baseline[1];});
+    document.getElementById('LOFAR_baselines').innerHTML = makeUL(stations).innerHTML;
 }
 </script>
 
