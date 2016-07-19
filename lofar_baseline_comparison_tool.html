@@ -43,7 +43,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">      
-		<p>Please input a single station ID (CS002HBA0, for example). You can also optionally enter a frequency in MHz to get results in MLambda.</p>
+		<p>This tool helps visualize the longest baselines to a given station. Please input a single station ID (CS002HBA0, for example). You can also optionally enter a frequency in MHz to get results in MLambda.</p>
 		<p>Coordinates may not be exact.</p>
 
 		<input type="text" id="stationText" value="IE613">
@@ -160,6 +160,8 @@ function readStationText() {
 			;
 		chart.margin().left = 120
 		chart.margin().right = 120
+		chart.yAxis
+		.axisLabel("UV distance (".concat(yunit).concat(")"));
 
 		d3.select('#chartloc')
 			.datum(lofarBarChart)
