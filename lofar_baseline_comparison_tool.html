@@ -130,7 +130,7 @@ function readStationText() {
 	station = document.getElementById("stationText").value;	// get the user input strings
 	freq_str = document.getElementById("refFreq").value;
 	if (freq_str.length > 0) {
-		mlambda = (2.99e8 / (parseFloat(freq_str)*1.0e6))/1.0e3;	// get 1 kilo wavelength
+		mlambda = (2.99e8 / (parseFloat(freq_str)*1.0e6))*1.0e3;	// get 1 kilo wavelength
 		yunit = "KLambda"
 	}
 	else {
