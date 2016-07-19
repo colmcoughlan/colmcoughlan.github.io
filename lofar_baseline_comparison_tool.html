@@ -51,9 +51,9 @@
 		<input type="text" id="refFreq" placeholder="Frequency (MHz)">
 
 		<button onclick="readStationText()">Go</button>
-		
+		<p id="chart_title"></p>
 	  </section>
-	  <svg width="800px" height="400px" id="chartloc">Here</svg>
+	  <svg width="800px" height="500px" id="chartloc"></svg>
     </div>
 
     
@@ -150,6 +150,8 @@ function readStationText() {
     	key: "Baseline length (".concat(yunit).concat(")"),
         values: calculate_baseline_lengths(station_id, mlambda).sort(function(a,b) {return b.value - a.value;})
     }];
+    
+    document.getElementById("chart_title").innerHTML = "Plotting all baselines to station ".concat(stations[station_id].stationName);	// add title
 
 	nv.addGraph(function() {
 		var chart = nv.models.multiBarHorizontalChart()
@@ -161,7 +163,7 @@ function readStationText() {
 		chart.margin().left = 120
 		chart.margin().right = 120
 		chart.yAxis
-		.axisLabel("UV distance (".concat(yunit).concat(")"));
+		.axisLabel("UV distance to ".concat(stations[station_id].stationName).concat(" (").concat(yunit).concat(")"));
 
 		d3.select('#chartloc')
 			.datum(lofarBarChart)
