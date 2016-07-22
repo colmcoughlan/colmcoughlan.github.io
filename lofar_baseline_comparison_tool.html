@@ -138,6 +138,7 @@ function readStationText() {
 		yunit = "km"
 	}
 	re = new RegExp(station, "i");	// convert to regular expression
+	station_id = nstations - 1;
     for(var i = 0; i < nstations ; i++) {
     	if(re.test(stations[i].stationName)) {
     		station_id = i;	// find corresponding station ID
