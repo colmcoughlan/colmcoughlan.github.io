@@ -6,44 +6,48 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Colm Coughlan : LOFAR baseline visualisation">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.css" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
 
     <title>LOFAR Baseline Comparison Tool - Colm Coughlan PhD</title>
   </head>
 
   <body>
   
-<link href="nv.d3.css" rel="stylesheet" type="text/css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-<script src="nv.d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/colmcoughlan">View on GitHub</a>
-
-          <h1 id="project_title">Colm Coughlan PhD</h1>
-          <h2 id="project_tagline">LOFAR Baseline Comparison Tool</h2>
-
-        </header>
-    </div>
-    
-    <div id="menu_wrap" class="menu">
-		<ul class="menu">
-		  <li class="menu"><a class="active" href="http://www.colmcoughlan.com">Home</a></li>
-		  <li class="menu"><a href="http://www.colmcoughlan.com/#research">Research</a></li>
-		  <li class="menu"><a href="http://www.colmcoughlan.com/#software">Software</a></li>
-		  <li class="menu"><a href="http://www.colmcoughlan.com/#outreach">Outreach</a></li>
-		  <li class="menu"><a href="http://astronomicalproblems.blogspot.ie/">Blog</a></li>
-		  <li class="menu"><a href="https://ie.linkedin.com/in/colmpcoughlan">LinkedIn</a></li>
-		  <li class="menu"><a href="http://www.colmcoughlan.com/lofar_baseline_comparison_tool.html">LOFAR</a></li>
-		</ul>
-    </div>
+    <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container">                       
+            <img class="profile-image img-responsive pull-left" src="assets/images/colm_coughlan.jpg" alt="James Lee" />
+            <div class="profile-content pull-left">
+                <h1 class="name">Colm Coughlan - PhD</h1>
+                <h2 class="desc">Data Scientist</h2>   
+                <ul class="social list-inline">
+                    <li><a href="https://twitter.com/colmcoughlanirl"><i class="fa fa-twitter"></i></a></li>                   
+                    <li><a href="https://plus.google.com/+ColmCoughlanIRL"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="https://ie.linkedin.com/in/colmpcoughlan"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/colmcoughlan"><i class="fa fa-github-alt"></i></a></li>                  
+                </ul> 
+            </div><!--//profile-->
+        </div><!--//container-->
+    </header><!--//header-->
 
     <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">      
-		<p>This tool helps visualize the longest baselines to a given station. Please input a single station ID (CS002HBA0, for example). You can also optionally enter a frequency in MHz to get results in kilolambda.</p>
+    <div class="container sections-wrapper">
+        <div class="row">
+                <section class="about section">
+                    <div class="section-inner">
+		<p>Radio interferometry combines the signals of different radio telescopes to achieve a better resolution than any single telescope is capable of. The further apart the telescopes (the longer the baseline between them), the higher the resolution! The addition of the Irish station to the international LOFAR array will increase the maximum resolution achievable.</p>
+		<p>This tool helps visualize the longest baselines to a given station. Please input a single station ID (CS002HBA0, for example). You can also optionally enter a frequency in MHz to get results in kilolambda. Note that the core stations (CS) and remote stations (RS) are located in the Netherlands, while the other stations are located across Europe (Germany, France, Poland, Sweden, the UK - and soon Ireland.)</p>
 		<p>Coordinates may not be exact.</p>
 
 		<input type="text" id="stationText" value="IE613">
@@ -52,9 +56,11 @@
 
 		<button onclick="readStationText()">Go</button>
 		<p id="chart_title"></p>
-	  </section>
 	  <svg width="800px" height="500px" id="chartloc"></svg>
     </div>
+    </section>
+</div>
+</div>
 
     
     
