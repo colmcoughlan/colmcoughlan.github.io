@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Colm Coughlan : LOFAR baseline visualisation">
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.css" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+
+    <title>Irish LOFAR station - Colm Coughlan PhD</title>
+  </head>
+
+  <body>
+  
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
+
+    <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container">                       
+            <img class="profile-image img-responsive pull-left" src="assets/images/colm_coughlan.jpg" alt="James Lee" />
+            <div class="profile-content pull-left">
+                <h1 class="name">Colm Coughlan - PhD</h1>
+                <h2 class="desc">Data Scientist</h2>   
+                <ul class="social list-inline">
+                    <li><a href="https://twitter.com/colmcoughlanirl"><i class="fa fa-twitter"></i></a></li>                   
+                    <li><a href="https://plus.google.com/+ColmCoughlanIRL"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="https://ie.linkedin.com/in/colmpcoughlan"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/colmcoughlan"><i class="fa fa-github"></i></a></li>
+                    <li><a href="index.html"><i class="fa fa-home"></i></a></li>                 
+                </ul> 
+            </div><!--//profile-->
+        </div><!--//container-->
+    </header><!--//header-->
+
+    <!-- MAIN CONTENT -->
+    <div class="container sections-wrapper">
+        <div class="row">
+                <section class="about section">
+                    <div class="section-inner">
+		<p>Radio interferometry combines the signals of different radio telescopes to achieve a better resolution than any single telescope is capable of. The further apart the telescopes (the longer the baseline between them), the higher the resolution! The addition of the Irish station to the international LOFAR array will increase the maximum resolution achievable.</p>
+		<p>This tool helps visualize the longest baselines to a given LOFAR station. Please input a single station ID (CS002HBA0, for example). You can also optionally enter a frequency in MHz to get results in kilolambda. Note that the core stations (CS) and remote stations (RS) are located in the Netherlands, while the other stations are located across Europe (Germany, France, Poland, Sweden, the UK - and soon Ireland.)</p>
+		<p>Coordinates may not be exact.</p>
+
+		<input type="text" id="stationText" value="IE613">
+		
+		<input type="text" id="refFreq" placeholder="Frequency (MHz)">
+
+		<button onclick="readStationText()">Go</button>
+		<p id="chart_title"></p>
+	  <svg width="800px" height="500px" id="chartloc"></svg>
+    </div>
+    </section>
+</div>
+</div>
+
+    
+    
+    
+<script>
+
+var stations = [
+    {"stationName":"CS002HBA0", "coords":[3826600.9610000001266599,460953.4020000000018626,5064881.1359999999403954]},
+    {"stationName":"CS002HBA1", "coords":[3826565.5940000000409782,460958.1099999999860302,5064907.2580000003799796]},
+    {"stationName":"CS003HBA0", "coords":[3826471.3480000002309680,461000.1379999999771826,5064974.2010000003501773]},
+    {"stationName":"CS003HBA1", "coords":[3826517.8119999999180436,461035.2579999999725260,5064936.1500000003725290]},
+    {"stationName":"CS004HBA0", "coords":[3826585.6260000001639128,460865.8439999999827705,5064900.5609999997541308]},
+    {"stationName":"CS004HBA1", "coords":[3826579.4860000000335276,460917.4799999999813735,5064900.5020000003278255]},
+    {"stationName":"CS005HBA0", "coords":[3826701.1600000001490116,460989.2500000000000000,5064802.6849999995902181]},
+    {"stationName":"CS005HBA1", "coords":[3826631.1940000001341105,461021.8150000000023283,5064852.2589999996125698]},
+    {"stationName":"CS006HBA0", "coords":[3826653.7829999998211861,461136.4400000000023283,5064824.9429999999701977]},
+    {"stationName":"CS006HBA1", "coords":[3826612.4989999998360872,461080.2980000000097789,5064861.0060000000521541]},
+    {"stationName":"CS007HBA0", "coords":[3826478.7149999998509884,461083.7199999999720603,5064961.1169999996200204]},
+    {"stationName":"CS007HBA1", "coords":[3826538.0210000001825392,461169.7310000000288710,5064908.8269999995827675]},
+    {"stationName":"CS017HBA0", "coords":[3826405.0950000002048910,461507.4600000000209548,5064978.0829999996349216]},
+    {"stationName":"CS017HBA1", "coords":[3826499.7829999998211861,461552.4980000000214204,5064902.9380000000819564]},
+    {"stationName":"CS021HBA0", "coords":[3826463.5019999998621643,460533.0939999999827705,5065022.6140000000596046]},
+    {"stationName":"CS021HBA1", "coords":[3826368.8130000000819564,460488.0569999999715947,5065097.7589999996125698]},
+    {"stationName":"CS024HBA0", "coords":[3827218.1929999999701977,461403.8979999999864958,5064378.7900000000372529]},
+    {"stationName":"CS024HBA1", "coords":[3827123.5040000001899898,461358.8609999999753200,5064453.9349999995902181]},
+    {"stationName":"CS026HBA0", "coords":[3826418.2269999999552965,461805.8369999999995343,5064941.1990000000223517]},
+    {"stationName":"CS026HBA1", "coords":[3826335.0780000002123415,461887.6959999999962747,5064996.2130000004544854]},
+    {"stationName":"CS032HBA0", "coords":[3826864.2620000001043081,460451.9239999999990687,5064730.0060000000521541]},
+    {"stationName":"CS032HBA1", "coords":[3826947.4109999998472631,460370.0659999999916181,5064674.9919999996200204]},
+    {"stationName":"CS101HBA0", "coords":[3825899.9769999999552965,461698.9060000000172295,5065339.2050000000745058]},
+    {"stationName":"CS101HBA1", "coords":[3825805.2880000001750886,461653.8690000000060536,5065414.3499999996274710]},
+    {"stationName":"CS103HBA0", "coords":[3826331.5899999998509884,462759.0740000000223517,5064919.6200000001117587]},
+    {"stationName":"CS103HBA1", "coords":[3826248.4410000001080334,462840.9330000000190921,5064974.6339999996125698]},
+    {"stationName":"CS201HBA0", "coords":[3826679.2809999999590218,461855.2430000000167638,5064741.3799999998882413]},
+    {"stationName":"CS201HBA1", "coords":[3826690.8209999999962747,461982.1390000000246800,5064721.2489999998360872]},
+    {"stationName":"CS302HBA0", "coords":[3827973.2259999997913837,459728.6240000000107102,5063975.2999999998137355]},
+    {"stationName":"CS302HBA1", "coords":[3827890.0770000000484288,459810.4830000000074506,5064030.3130000000819564]},
+    {"stationName":"CS501HBA0", "coords":[3825568.8199999998323619,460647.6199999999953434,5065683.0279999999329448]},
+    {"stationName":"CS501HBA1", "coords":[3825663.5079999999143183,460692.6579999999958090,5065607.8830000003799796]},
+    {"stationName":"RS106HBA", "coords":[3829205.5980000002309680,469142.5329999999958090,5062181.0020000003278255]},
+    {"stationName":"RS205HBA", "coords":[3831479.6699999999254942,463487.5289999999804422,5060989.9029999999329448]},
+    {"stationName":"RS208HBA", "coords":[3847753.3100000000558794,466962.8090000000083819,5048397.2439999999478459]},
+    {"stationName":"RS210HBA", "coords":[3877827.5618599997833371,467536.6049559999955818,5025445.5839999997988343]},
+    {"stationName":"RS305HBA", "coords":[3828732.7209999999031425,454692.4209999999729916,5063850.3339999997988343]},
+    {"stationName":"RS306HBA", "coords":[3829771.2489999998360872,452761.7019999999902211,5063243.1809999998658895]},
+    {"stationName":"RS307HBA", "coords":[3837964.5200000000186265,449627.2609999999986030,5057357.5849999999627471]},
+    {"stationName":"RS310HBA", "coords":[3845376.2900000000372529,413616.5640000000130385,5054796.3410000000149012]},
+    {"stationName":"RS406HBA", "coords":[3818424.9389999997802079,452020.2689999999711290,5071817.6440000003203750]},
+    {"stationName":"RS407HBA", "coords":[3811649.4550000000745058,453459.8939999999711290,5076728.9519999995827675]},
+    {"stationName":"RS409HBA", "coords":[3824812.6209999998100102,426130.3300000000162981,5069251.7539999997243285]},
+    {"stationName":"RS503HBA", "coords":[3824138.5660000001080334,459476.9720000000088476,5066858.5779999997466803]},
+    {"stationName":"RS508HBA", "coords":[3797136.4840000001713634,463114.4469999999855645,5086651.2860000003129244]},
+    {"stationName":"RS509HBA", "coords":[3783537.5249999999068677,450130.0640000000130385,5097866.1459999997168779]},
+    {"stationName":"DE601HBA", "coords":[4034101.5219999998807907,487012.7569999999832362,4900230.4989999998360872]},
+    {"stationName":"DE602HBA", "coords":[4152568.0060000000521541,828789.1530000000493601,4754362.2029999997466803]},
+    {"stationName":"DE603HBA", "coords":[3940295.7059999997727573,816722.8649999999906868,4932394.4160000002011657]},
+    {"stationName":"DE604HBA", "coords":[3796379.8229999998584390,877614.1300000000046566,5032712.5279999999329448]},
+    {"stationName":"DE605HBA", "coords":[4005681.0200000000186265,450968.6429999999818392,4926458.2110000001266599]},
+    {"stationName":"FR606HBA", "coords":[4324016.7079999996349216,165545.5249999999941792,4670271.3629999998956919]},
+    {"stationName":"SE607HBA", "coords":[3370271.6570000001229346,712125.8810000000521541,5349991.1650000000372529]},
+    {"stationName":"UK608HBA", "coords":[4008461.9410000001080334,-100376.6089999999967404,4943716.8739999998360872]},
+    {"stationName":"DE609HBA", "coords":[3727217.673450, 655109.174749, 5117003.123000]},
+	{"stationName":"PL610HBA", "coords":[3738425.932, 1148187.176, 5021750.597]},
+	{"stationName":"PL611HBA", "coords":[3850973.987, 1439061.041, 4860478.994]},
+    {"stationName":"PL612HBA", "coords":[3551478.643, 1334128.493, 5110179.160]},
+    {"stationName":"IE613HBA", "coords":[3802144.90510005, -528778.972572575, 5076611.77019603]},
+    {"stationName":"TS_CS*", "coords":[3826557.456042, 461029.057563, 5064907.814896]}
+];
+
+var nstations = stations.length;
+
+function readStationText() {
+	station = document.getElementById("stationText").value;	// get the user input strings
+	freq_str = document.getElementById("refFreq").value;
+	if (freq_str.length > 0) {
+		mlambda = (2.99e8 / (parseFloat(freq_str)*1.0e6))*1.0e3;	// get 1 kilo wavelength
+		yunit = "KLambda"
+	}
+	else {
+		mlambda = 1000.0;
+		yunit = "km"
+	}
+	re = new RegExp(station, "i");	// convert to regular expression
+	station_id = nstations - 1;
+    for(var i = 0; i < nstations ; i++) {
+    	if(re.test(stations[i].stationName)) {
+    		station_id = i;	// find corresponding station ID
+    		break;
+    	}
+    }
+    
+    lofarBarChart = [
+    {
+    	key: "Baseline length (".concat(yunit).concat(")"),
+        values: calculate_baseline_lengths(station_id, mlambda).sort(function(a,b) {return b.value - a.value;})
+    }];
+    
+    document.getElementById("chart_title").innerHTML = "Plotting all baselines to station ".concat(stations[station_id].stationName);	// add title
+
+	nv.addGraph(function() {
+		var chart = nv.models.multiBarHorizontalChart()
+			.x(function(d) { return d.label })
+			.y(function(d) { return d.value })
+			.showValues(true)
+			.duration(250)
+			;
+		chart.margin().left = 120
+		chart.margin().right = 120
+		chart.yAxis
+		.axisLabel("UV distance to ".concat(stations[station_id].stationName).concat(" (").concat(yunit).concat(")"));
+
+		d3.select('#chartloc')
+			.datum(lofarBarChart)
+			.call(chart);
+
+		nv.utils.windowResize(chart.update);
+		return chart;
+	});
+
+    return(0);
+}
+
+
+give_baseline_length = function(a,b) {
+  return Math.sqrt(Math.pow(a.coords[0] - b.coords[0] , 2)+Math.pow(a.coords[1] - b.coords[1],2)+Math.pow(a.coords[2] - b.coords[2],2));
+};
+
+calculate_baseline_lengths = function(station_id, mlambda) {
+	var bs = []
+    for(var i = 0; i < nstations; i++) {
+    	if( i != station_id ) {
+			bs.push( {'label':stations[i].stationName, 'value':give_baseline_length(stations[i], stations[station_id])/mlambda});
+		}
+    }
+    return(bs);
+}
+
+readStationText()
+    
+</script>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
