@@ -5,19 +5,26 @@ jQuery(document).ready(function($) {
     
     $('.level-bar-inner').css('width', '0');
     
-    $(window).on('load', function() {
+    function animateLevelBars() {
 
         $('.level-bar-inner').each(function() {
-        
+
             var itemWidth = $(this).data('level');
-            
+
             $(this).animate({
                 width: itemWidth
             }, 800);
-            
+
         });
 
-    });
+    }
+
+    // jQuery 3 may run ready handlers after window load has already fired
+    if (document.readyState === 'complete') {
+        animateLevelBars();
+    } else {
+        $(window).on('load', animateLevelBars);
+    }
     
     /* Bootstrap Tooltip for Skillset */
     $('.level-label').tooltip();
